@@ -1,0 +1,8 @@
+# Root-level .gitignore for solution-wide rules
+
+# Ignore build output
+**/bin/
+**/obj/
+.vs/
+*.suo
+*.user

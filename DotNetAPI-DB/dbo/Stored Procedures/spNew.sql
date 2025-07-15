@@ -1,0 +1,12 @@
+﻿
+
+
+CREATE PROC spNew
+AS 
+
+BEGIN
+
+SELECT * FROM TestTable
+
+
+END
