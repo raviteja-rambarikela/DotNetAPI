@@ -6,9 +6,10 @@ using DapperApi.IRepositories;
 
 namespace DapperApiDemo.Controllers
 {
-    //[Authorize]
-    [Route("api/[controller]")]
+    //[Authorize(Roles = " ")]
     [ApiController]
+    [Route("api/v{version:apiVersion}/[controller]")]    
+    [ApiVersion("1.0")]
     public class ProductController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
@@ -23,7 +24,7 @@ namespace DapperApiDemo.Controllers
             Ok(await _productRepository.GetAll());
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<ActionResult<Product>> GetById(int id)
         {
             var product = await _productRepository.GetById(id);
             return product == null ? NotFound() : Ok(product);

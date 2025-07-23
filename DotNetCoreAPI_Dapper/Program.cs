@@ -1,9 +1,11 @@
 
+using DapperApi.IRepositories;
+using DapperApiDemo.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using DapperApiDemo.Repositories;
-using DapperApi.IRepositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +35,19 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key!))
     };
 });
+
+builder.Services.AddApiVersioning(options =>
+{
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.ReportApiVersions = true;
+
+    // Choose one:
+    options.ApiVersionReader = new UrlSegmentApiVersionReader();
+    // options.ApiVersionReader = new HeaderApiVersionReader(\"x-api-version\");
+    // options.ApiVersionReader = new QueryStringApiVersionReader(\"v\");
+});
+
 
 var app = builder.Build();
 
